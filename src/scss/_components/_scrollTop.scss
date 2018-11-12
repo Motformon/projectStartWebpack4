@@ -1,0 +1,38 @@
+.top-scroll {
+  position: fixed;
+  bottom: 30px;
+  right: -100px;
+  background-color: $accent;
+  z-index: 12;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: all .3s ease;
+	opacity: .5;
+} 
+
+.top-scroll::before {
+	content: '';
+	position: absolute;
+	background-image: url(../img/arrow-up.svg);
+	width: 25px;
+	height: 25px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.top-scroll:hover {
+  opacity: 1;
+} 
+
+.top-scroll_active {
+  right: 30px;
+}
