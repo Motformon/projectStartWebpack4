@@ -1,6 +1,11 @@
 {
 	"presets": [
-		"env" ,
-		"stage-3"
+		"@babel/preset-typescript",
+		"@babel/preset-react",
+		["@babel/preset-env", {
+			"targets": [
+				"last 5 versions"
+			]
+		}]
 	]
 }

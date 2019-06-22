@@ -1,92 +1,52 @@
-const path = require('path');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const autoprefixer = require('autoprefixer');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const HTMLPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
-let conf = {
-	entry: './src/js/index.js',
-	output: {
-		filename: 'main.js',
-		path: path.resolve(__dirname, 'dist'),
-		publicPath: 'dist/'
-	},
-	devServer: {
-		overlay: true,
-	},
-	module: {
-		rules: [
-			// {
-			// 	test: /\.html$/,
-			// 	use: 'html-loader'
-			// },
-			{
-				test: /\.js$/,
-				loader: 'babel-loader',
-				//exclude: '/node_modules/'
-			},
-			{
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: "css-loader"
-        })
-			},
-			{
-				test: /\.scss$/,
-				use: ExtractTextPlugin.extract({
-					publicPath:"./",
-					fallback: 'style-loader',
-					use: 
-						[
-							{loader:'css-loader'},
-							{loader:'sass-loader'},
-		
-							{
-								loader:'postcss-loader',
-								options: {
-									plugins: [
-										autoprefixer({
-												browsers:['ie >= 8', 'last 4 version']
-										})
-									],
-								}
-							},
-						]
-				})
-			},
-			{
-				test: /\.(png|jpe?g|svg)$/i,
-				use: [
-					{
-						loader: 'url-loader',
-						options: {
-							fallback: 'responsive-loader'
-						}
-					}
-				]
-			},
-			{
-				test: /\.(woff|woff2|eot|ttf)$/,
-				loader: 'url-loader',
-			}
-		]
-	},
-	plugins: [
-		new HtmlWebpackPlugin({
-      template: './public/index.html'
+module.exports = {
+  entry: './src/index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'build')
+  },
+  optimization: {
+    minimizer: [
+      new OptimizeCssAssetsPlugin({}),
+      new UglifyJsPlugin({})
+    ]
+  },
+  devServer: {
+    contentBase: path.resolve(__dirname, 'build'),
+    port: 4200
+  },
+  plugins: [
+    new HTMLPlugin({
+      filename: 'index.html',
+      template: './src/index.html'
     }),
-		new ExtractTextPlugin("style.css"),
+    new MiniCssExtractPlugin({
+      filename: 'style.css'
+    })
   ],
-	devtool: 'eval-sourcemap'
-};
-
-module.exports = (env, options) => {
-
-
-
-	let production = options.mode === 'production';
-	
-	conf.devtool = production ? false : 'eval-sourcemap';
-
-	return conf;
+  resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx']
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      },
+      {
+        test: /\.scss$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+      },
+      { 
+        test: /\.(js|jsx|ts|tsx)$/, 
+        exclude: /node_modules/, 
+        loader: "babel-loader" 
+      }
+    ]
+  }
 }
