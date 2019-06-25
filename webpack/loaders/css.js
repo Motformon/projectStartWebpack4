@@ -14,7 +14,8 @@ const resolverOptions = {
 };
 
 module.exports = {
-    client: {
+    client: [
+			{
         test: /\.css$/,
         use: [
             IS_DEV && 'css-hot-loader',
@@ -31,10 +32,25 @@ module.exports = {
                     ].filter(Boolean)
                 }
             }
-        ].filter(Boolean)
-    },
-    server: {
-        test: /\.css$/,
+				].filter(Boolean)
+			},
+			{
+				test: /\.scss$/,
+				use: [
+					MiniCssExtractPlugin.loader, 
+					'css-loader', 
+					'sass-loader'
+				]
+			}
+    ],
+    server: [
+			{
+				test: /\.css$/,
         loader: 'null-loader'
-    }
+			},
+			{
+				test: /\.scss$/,
+				loader: 'null-loader'
+			}
+		]
 };
