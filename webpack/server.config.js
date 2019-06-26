@@ -15,7 +15,7 @@ module.exports = {
     module: {
         rules: [
             fileLoader.server,
-            cssLoader.server,
+            ...cssLoader.server,
             jsLoader.server
         ]
     },
@@ -27,7 +27,7 @@ module.exports = {
     },
     resolve: {
         modules: ['src', 'node_modules'],
-        extensions: ['*', '.js', '.jsx', '.json']
+        extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.json']
     },
     externals: [nodeExternals({ whitelist: [/\.(?!(?:jsx?|json)$).{1,5}$/i] })],
     optimization: { nodeEnv: false }

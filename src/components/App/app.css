@@ -1,4 +1,15 @@
-@import '~styles/media.css';
+.App {
+	padding: 20px;
+}
+
+.App h2 {
+	color: green;
+}
+
+
+/* @import '~styles/media.css';
+
+
 
 html, body, #mount {
   padding: 0;
@@ -73,4 +84,4 @@ html {
       margin: 0 auto;
     }
   }
-}
+} */

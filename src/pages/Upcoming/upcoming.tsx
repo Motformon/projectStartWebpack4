@@ -1,15 +1,15 @@
 import React from 'react';
 
-import './upcoming.scss';
+const classes = require('./upcoming.css');
 
 
 const Upcoming = () => {
 	const numberTest:number = 10;
     return (
-        <div className="page centering">
+        <div className={classes.Upcoming}>
             <div className="container clear">
                 <h2>{numberTest}Upcoming...</h2>
-                <div className="upcoming__banner" />
+                <div className={classes.banner} />
             </div>
         </div>
     );

@@ -19,7 +19,7 @@ module.exports = {
     module: {
         rules: [
             fileLoader.client,
-            cssLoader.client,
+            ...cssLoader.client,
             jsLoader.client
         ]
     },
